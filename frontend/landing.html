@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FoodLens — Don't Trust the Label</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+:root{
+  --bg:#ffffff;
+  --bg1:#f7f7f8;
+  --border:#e2e2e6;
+  --text0:#0f0f12;
+  --text1:#5a5a6a;
+  --text2:#9090a0;
+  --green:#1a8a3c;
+  --green-bg:#f0faf3;
+  --green-bd:#b8e8c8;
+  --r:12px;
+  --r-sm:8px;
+  --font:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04);
+}
+body{font-family:var(--font);background:var(--bg1);color:var(--text0);min-height:100vh;-webkit-font-smoothing:antialiased}
+.shell{max-width:480px;margin:0 auto;padding:0 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center}
+.nav{padding:0 0 40px}
+.brand-name{font-size:1.1rem;font-weight:700;letter-spacing:-0.04em;color:var(--text0)}
+.hero{padding:0}
+.hero-eyebrow{font-size:0.63rem;font-family:var(--mono);letter-spacing:0.14em;text-transform:uppercase;color:var(--text2);margin-bottom:16px}
+.hero-title{font-size:2.4rem;font-weight:700;letter-spacing:-0.04em;line-height:1.1;color:var(--text0);margin-bottom:18px}
+.hero-title span{color:var(--green)}
+.hero-sub{font-size:0.95rem;color:var(--text1);line-height:1.6;max-width:340px;margin:0 auto 32px}
+.btn-cta{padding:13px 24px;background:var(--text0);color:var(--bg);font-weight:600;font-size:0.85rem;border:none;border-radius:var(--r-sm);cursor:pointer;font-family:var(--font);letter-spacing:0.01em;text-decoration:none;display:inline-block;transition:opacity 0.15s}
+.btn-cta:hover{opacity:0.82}
+.btn-cta:active{opacity:0.65}
+.graphic{margin:8px 0 0;width:100%;border-radius:var(--r);overflow:hidden}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <nav class="nav">
+    <span class="brand-name">FoodLens</span>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow">India Food Health Index</p>
+    <h1 class="hero-title">Don't trust<br>the <span>label.</span></h1>
+    <p class="hero-sub">Scan any packaged food barcode and find out what you're actually eating — using nutrition science calibrated for India, not Europe.</p>
+    <a href="/app" class="btn-cta">Analyse a product</a>
+  </section>
+
+
+
+</div>
+</body>
+</html>

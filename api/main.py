@@ -2,7 +2,7 @@
 #  api/main.py  —  FoodLens Backend API
 #  Run: uvicorn api.main:app --reload --port 8000
 # ============================================================
-
+from database import get_cached, save_cache, log_scan
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -144,11 +144,16 @@ def run_scoring(nutrients, product_name, ingredients,
 # ── ROUTES ────────────────────────────────────────────────
 @app.get("/")
 def root():
+    landing = os.path.join(FRONTEND_DIR, "landing.html")
+    if os.path.exists(landing):
+        return FileResponse(landing)
+    return {"message": "FoodLens API running"}
+@app.get("/app")
+def app_page():
     index = os.path.join(FRONTEND_DIR, "index.html")
     if os.path.exists(index):
         return FileResponse(index)
-    return {"message": "FoodLens API running"}
-
+    return {"message": "App not found"}
 
 @app.get("/health")
 def health():
@@ -157,6 +162,12 @@ def health():
 
 @app.get("/scan/{barcode}")
 def scan(barcode: str):
+    # Check cache first
+    cached = get_cached(barcode)
+    if cached:
+        return cached
+
+    # Not cached — hit Open Food Facts
     try:
         product = lookup_barcode(barcode)
     except ConnectionError as e:
@@ -169,27 +180,30 @@ def scan(barcode: str):
         )
 
     nutrients = product["nutrients"]
-
     try:
-        feat    = engineer_features(nutrients)
-        feat_sc = scaler.transform(feat)
-        raw     = float(model.predict(feat_sc)[0])
-        alts    = find_alternatives(
+        alts = find_alternatives(
             product.get("category_tag", ""),
             compute_ifhi(nutrients)
         )
     except Exception:
         alts = []
 
-    return run_scoring(
-        nutrients      = nutrients,
-        product_name   = product["product_name"],
-        ingredients    = product.get("ingredients_text", ""),
-        categories     = product.get("categories", ""),
-        image_url      = product.get("image_url", ""),
-        brand          = product.get("brand", ""),
-        alternatives   = alts,
+    result = run_scoring(
+        nutrients    = nutrients,
+        product_name = product["product_name"],
+        ingredients  = product.get("ingredients_text", ""),
+        categories   = product.get("categories", ""),
+        image_url    = product.get("image_url", ""),
+        brand        = product.get("brand", ""),
+        alternatives = alts,
     )
+
+    # Save to cache and log the scan
+    save_cache(barcode, product["product_name"], result)
+    log_scan(barcode, product["product_name"],
+             result["score"]["ifhi"], result["deception"]["score"])
+
+    return result
 
 
 @app.post("/score")
