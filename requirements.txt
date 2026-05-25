@@ -67,6 +67,7 @@ Pygments==2.20.0
 pylibsrtp==1.0.0
 pyOpenSSL==26.0.0
 pyparsing==3.3.2
+psycopg2-binary
 pytesseract==0.3.13
 python-dateutil==2.9.0.post0
 python-multipart==0.0.26

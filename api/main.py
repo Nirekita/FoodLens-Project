@@ -2,13 +2,14 @@
 #  api/main.py  —  FoodLens Backend API
 #  Run: uvicorn api.main:app --reload --port 8000
 # ============================================================
-from database import get_cached, save_cache, log_scan
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Optional
+from database import get_cached, save_cache, log_scan
 import joblib
 import numpy as np
 import os
