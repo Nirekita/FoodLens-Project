@@ -101,3 +101,4 @@ typing_extensions==4.15.0
 urllib3==2.6.3
 uvicorn==0.44.0
 xgboost==3.2.0
+sqlalchemy
