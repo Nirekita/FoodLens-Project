@@ -228,3 +228,4 @@ def score_manual(data: ManualEntry):
         serving_size_g = data.serving_size_g,
         package_size_g = data.package_size_g,
     )
+
